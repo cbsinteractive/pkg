@@ -1,6 +1,7 @@
 package xrayutil
 
 import (
+	"context"
 	"fmt"
 	"net"
 	"net/http"
@@ -52,6 +53,11 @@ func (t XrayTracer) Handle(segmentNamer interface{ Name(host string) string }, h
 
 func (t XrayTracer) Client(c *http.Client) *http.Client {
 	return xray.Client(c)
+}
+
+func (t XrayTracer) BeginSubsegment(ctx context.Context, name string) interface{ Close(error) } {
+	_, seg := xray.BeginSubsegment(ctx, name)
+	return seg
 }
 
 type ctxMissingStrategy struct {
