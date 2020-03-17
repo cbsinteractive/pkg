@@ -55,9 +55,8 @@ func (t XrayTracer) Client(c *http.Client) *http.Client {
 	return xray.Client(c)
 }
 
-func (t XrayTracer) BeginSubsegment(ctx context.Context, name string) interface{ Close(error) } {
-	_, seg := xray.BeginSubsegment(ctx, name)
-	return seg
+func (t XrayTracer) BeginSubsegment(ctx context.Context, name string) (context.Context, interface{ Close(error) }) {
+	return xray.BeginSubsegment(ctx, name)
 }
 
 type ctxMissingStrategy struct {
