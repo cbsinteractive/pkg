@@ -55,6 +55,10 @@ func (t XrayTracer) Client(c *http.Client) *http.Client {
 	return xray.Client(c)
 }
 
+func (t XrayTracer) BeginSegment(ctx context.Context, name string) (context.Context, interface{ Close(error) }) {
+	return xray.BeginSegment(ctx, name)
+}
+
 func (t XrayTracer) BeginSubsegment(ctx context.Context, name string) (context.Context, interface{ Close(error) }) {
 	return xray.BeginSubsegment(ctx, name)
 }

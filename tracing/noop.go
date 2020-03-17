@@ -13,8 +13,11 @@ type NoopTracer struct{}
 
 func (NoopTracer) Init() error                        { return nil }
 func (NoopTracer) Client(c *http.Client) *http.Client { return c }
-func (NoopTracer) BeginSubsegment(ctx context.Context, name string) interface{ Close(error) } {
-	return nopCloser{}
+func (NoopTracer) BeginSegment(context.Context, string) (context.Context, interface{ Close(error) }) {
+	return context.Background(), nopCloser{}
+}
+func (NoopTracer) BeginSubsegment(context.Context, string) (context.Context, interface{ Close(error) }) {
+	return context.Background(), nopCloser{}
 }
 func (NoopTracer) Handle(_ interface{ Name(host string) string }, h http.Handler) http.Handler {
 	return h

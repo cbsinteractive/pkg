@@ -9,6 +9,7 @@ type Tracer interface {
 	Init() error
 	Client(*http.Client) *http.Client
 	Handle(interface{ Name(host string) string }, http.Handler) http.Handler
+	BeginSegment(ctx context.Context, name string) (context.Context, interface{ Close(error) })
 	BeginSubsegment(ctx context.Context, name string) (context.Context, interface{ Close(error) })
 }
 
