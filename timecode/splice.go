@@ -2,7 +2,6 @@ package timecode
 
 import (
 	"encoding/json"
-	"fmt"
 	"sort"
 	"time"
 )
@@ -75,28 +74,4 @@ func (s *Splice) UnmarshalText(p []byte) error {
 	// value for the range; do we want to be more strict about this? What
 	// does videorobot do?
 	return json.Unmarshal(p, (*[]Range)(s))
-}
-
-// ParseTimecode parses an input string in HH:MM:SS:FF, HH:MM:SS;FF, or
-// HH:MM:SS format, defined by the following convention
-// HH = hour, MM = minute, SS = second, and FF is the frame number, the
-// frameRate argument is either 0, or a fractional frame rate upon which
-// to calculate the precise Range value based on the FF argument, if present.
-func ParseTimecode(tc string, fps float64) (Range, error) {
-	if fps == 0 {
-		fps = defaultFps
-	}
-	var h, m, s, f float64
-	n, err := fmt.Sscanf(tc, "%f:%f:%f:%f", &h, &m, &s, &f)
-	if n < 3 {
-		n, _ = fmt.Sscanf(tc, "%f:%f:%f;%f", &h, &m, &s, &f)
-	}
-	if n < 3 {
-		return Range{}, err
-	}
-	if f == 0 {
-		f = fps // avoid NaN condition
-	}
-	return Range{0, h*3600 + m*60 + s + (fps / f)}, err
-
 }
