@@ -7,15 +7,15 @@ import (
 
 func TestBasicExample(t *testing.T) {
 	// TODO(as): turn this into a real test
-	video, _ := ParseTimecode("01:00:00:00", 60)
+	video, _ := Parse("01:00:00:00", 60)
 	splice := Splice{{5, 10}, {25, 30}}
 	checkSplice(video, splice)
 
-	video, _ = ParseTimecode("00:00:10:00", 60)
+	video, _ = Parse("00:00:10:00", 60)
 	splice = Splice{{25, 30}, {5, 10}}
 	checkSplice(video, splice)
 
-	video, _ = ParseTimecode("00:01:11:05", 60)
+	video, _ = Parse("00:01:11:05", 60)
 	splice = Splice{{25, 30}, {5, 10}}
 	checkSplice(video, splice)
 }
@@ -51,7 +51,7 @@ func checkSplice(video Range, s Splice) {
 }
 
 func ExampleUsage() {
-	r, _ := ParseTimecode("00:00:10:00", 60)
+	r, _ := Parse("00:00:10:00", 60)
 	s := Splice{{1, 5}}
 	fmt.Println("video timecode", r.Timecode(60))
 	fmt.Println(s, "in", r, "?", s.In(r))
@@ -60,7 +60,7 @@ func ExampleUsage() {
 	fmt.Println("output length", s.Size())
 
 	// Output: video timecode 00:00:10:00
-	// [(1s-5s)] in (0s-11s) ? true
+	// [(1s-5s)] in (0s-10s) ? true
 	// splice sorted? true
 	// input: minimum span (1s-5s)
 	// output length 4s

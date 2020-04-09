@@ -1,3 +1,3 @@
-module github.com/cbsinteractive/pkg/time
+module github.com/cbsinteractive/pkg/timecode
 
 go 1.13
