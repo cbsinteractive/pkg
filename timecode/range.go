@@ -1,13 +1,9 @@
 package timecode
 
 import (
-	"encoding/json"
 	"fmt"
-	"sort"
 	"time"
 )
-
-const defaultFps = 23.997
 
 // Range is a pair of decimal seconds defining a time interval
 // starting at Range[0] and ending at Range[1]
