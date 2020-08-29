@@ -7,3 +7,7 @@ type Crop struct {
 	Left   int `json:"left,omitempty"`
 	Right  int `json:"right,omitempty"`
 }
+
+func (c Crop) Empty() bool {
+	return c != (Crop{})
+}
