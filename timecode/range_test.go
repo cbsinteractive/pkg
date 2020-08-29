@@ -12,9 +12,9 @@ func TestRangeTimecode(t *testing.T) {
 		{"1s", "00:00:01:00", Range{0, 1}},
 		{"59s", "00:00:59:00", Range{0, 59}},
 		// TODO(as): These don't work right, but they aren't a priority to fix
-		//		{"frame59", "00:00:00:59", Range{0, 1}},
-		//		{"frame60", "00:00:00:60", Range{0, 1}},
-		//		{"frame600", "00:00:00:600", Range{0, 10}},
+		{"frame59", "00:00:00:59", Range{0, 1}},
+		{"frame60", "00:00:00:60", Range{0, 1}},
+		{"frame600", "00:00:00:600", Range{0, 10}},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			have, err := Parse(tc.input, 60)
