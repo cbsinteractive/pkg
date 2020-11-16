@@ -4,8 +4,8 @@ import "image"
 
 // Crop holds offsets for top, bottom, left and right cropping, values are in pixels
 type Crop struct {
-	Top    int `json:"top,omitempty"`
 	Left   int `json:"left,omitempty"`
+	Top    int `json:"top,omitempty"`
 	Right  int `json:"right,omitempty"`
 	Bottom int `json:"bottom,omitempty"`
 }
@@ -17,12 +17,14 @@ func (c Crop) Rect(src image.Rectangle) image.Rectangle {
 		src.Min.Y+c.Top,
 		src.Max.X-c.Right,
 		src.Max.Y-c.Bottom,
-	)
+	).Intersect(src).Canon()
 }
 
 // From sets c to the result of the cropping operation, it is the
 // inverse of c.Rect
 func (c *Crop) From(src, crop image.Rectangle) {
+	src = src.Canon()
+	crop = src.Intersect(crop).Canon()
 	c.Left = crop.Min.X - src.Min.X
 	c.Top = crop.Min.Y - src.Min.Y
 	c.Right = src.Max.X - crop.Max.X

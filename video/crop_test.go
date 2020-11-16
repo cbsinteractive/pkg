@@ -22,14 +22,15 @@ func TestCrop(t *testing.T) {
 		{R(0, 0, 100, 100), R(0, 0, 100, 100), Crop{0, 0, 0, 0}},
 		{R(0, 0, 100, 100), R(10, 10, 90, 90), Crop{10, 10, 10, 10}},
 		{R(0, 0, 1920, 1080), R(0, 0, 1280, 720), Crop{0, 0, 640, 360}},
+		{R(0, 0, 1280, 720), R(0, 0, 1920, 1080), Crop{0, 0, 0, 0}},
 	} {
 		c := Crop{}
 		c.From(tt.src, tt.crop)
 		if have := c; have != tt.want {
 			t.Fatalf("%d: src %s crop %s: bad crop:\n\t\thave: %+v\n\t\twant: %+v", i, tt.src, tt.crop, have, tt.want)
 		}
-		if have := c.Rect(tt.src); have != tt.crop {
-			t.Fatalf("%d: src %s crop %s: bad bijection:\n\t\thave: %v\n\t\twant: %v", i, tt.src, tt.crop, have, tt.crop)
+		if have, want := c.Rect(tt.src), tt.crop.Intersect(tt.src); have != want {
+			t.Fatalf("%d: src %s crop %s: bad bijection:\n\t\thave: %v\n\t\twant: %v", i, tt.src, tt.crop, have, want)
 		}
 	}
 }
