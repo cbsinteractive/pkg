@@ -65,6 +65,9 @@ func center(r image.Rectangle) image.Point {
 // in units of the aspect ratio ar, rounded up to the
 // nearest whole unit
 func delta(ar image.Point, src, r image.Rectangle) (units image.Point) {
+	if ar.X == 0 || ar.Y == 0{
+		return image.ZP
+	}
 	return image.Pt(
 		((src.Dx() - r.Dx() + ar.X - 1) / ar.X),
 		((src.Dy() - r.Dy() + ar.Y - 1) / ar.Y),
