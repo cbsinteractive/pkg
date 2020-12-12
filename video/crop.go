@@ -4,10 +4,10 @@ import "image"
 
 // Crop holds offsets for top, bottom, left and right cropping, values are in pixels
 type Crop struct {
-	Left   int `json:"left,omitempty"`
-	Top    int `json:"top,omitempty"`
-	Right  int `json:"right,omitempty"`
-	Bottom int `json:"bottom,omitempty"`
+	Left   int `json:"left,omitempty" redis-hash:"left,omitempty"`
+	Top    int `json:"top,omitempty" redis-hash:"top,omitempty"`
+	Right  int `json:"right,omitempty" redis-hash:"right,omitempty"`
+	Bottom int `json:"bottom,omitempty" redis-hash:"bottom,omitempty"`
 }
 
 // Rect returns a Go rectangle, given the original source dimensions
